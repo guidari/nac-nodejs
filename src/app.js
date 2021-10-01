@@ -1,27 +1,27 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('')
+mongoose.connect(
+  ""
+);
 
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, x-access-token"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  next();
 });
 
+require("./models/user");
 
-//Registar as models
-require('./models/product')
+const userRouter = require("./routes/user-route");
 
-//Rotas 
-const productRouter = require('./routes/product-route')
+app.use("/users", userRouter);
 
-
-app.use('/products', productRouter)
-
-//meu erro 
 module.exports = app;
